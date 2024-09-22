@@ -18039,14 +18039,22 @@ class V0 extends HTMLElement {
     }), this.addEventListener("mouseup", c);
   }
   updateCharacters() {
-    this.draggable ? this.innerHTML = `<div style="display: flex"> 
-                                <span> Powered by AiEditor, Characters: ${this.count} </span>
+    const str = this.getMarkdown()
+    const chinese = Array.from(str).filter((ch) => /[\u4e00-\u9fa5]/.test(ch));
+    const english = Array.from(str)
+      .map((ch) => (/[a-zA-Z0-9\s]/.test(ch) ? ch : ' '))
+      .join('')
+      .split(/\s+/)
+      .filter((s) => s);
+    const wordsCount = chinese.length + english.length
+    this.draggable ? this.innerHTML = `<div style="display: flex;padding: 10px"> 
+                                <span> 单词数: ${this.wordsCount} </span>
                                 <div style="width: 20px;height: 20px;overflow: hidden">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M12 16L6 10H18L12 16Z"></path></svg>
                                 </div>
                             </div>
-                            ` : this.innerHTML = `<div style="display: flex;"> 
-                                <span style="margin-right: 10px"> Powered by AiEditor, Characters: ${this.count} </span>
+                            ` : this.innerHTML = `<div style="display: flex;padding: 10px;"> 
+                                <span style="margin-right: 10px"> 单词数: ${this.wordsCount} </span>
                             </div>
                             `;
   }
