@@ -1,5 +1,5 @@
 {
-  "name": "aieditor",
+  "name": "aieditor-edutop",
   "author": "yangfuhai",
   "version": "1.1.2",
   "type": "module",
@@ -82,7 +82,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/aieditor-team/aieditor"
+    "url": "https://github.com/zhangqiangoffice/AiEditorEduTop"
   },
   "bugs": {
     "url": "https://github.com/aieditor-team/aieditor/issues"
