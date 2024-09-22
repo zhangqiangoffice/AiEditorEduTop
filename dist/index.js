@@ -18039,13 +18039,13 @@ class V0 extends HTMLElement {
     }), this.addEventListener("mouseup", c);
   }
   updateCharacters() {
-    this.draggable ? this.innerHTML = `<div style="display: flex"> 
+    this.draggable ? this.innerHTML = `<div style="display: flex; padding: 10px;"> 
                                 <span>  单词数:  ${this.count} </span>
                                 <div style="width: 20px;height: 20px;overflow: hidden">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M12 16L6 10H18L12 16Z"></path></svg>
                                 </div>
                             </div>
-                            ` : this.innerHTML = `<div style="display: flex;"> 
+                            ` : this.innerHTML = `<div style="display: flex; padding: 10px;"> 
                                 <span style="margin-right: 10px"> 单词数: ${this.count} </span>
                             </div>
                             `;
