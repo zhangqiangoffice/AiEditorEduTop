@@ -67,12 +67,12 @@ export class Footer extends HTMLElement implements AiEditorEvent {
     updateCharacters() {
         if (!this.draggable) {
             this.innerHTML = `<div style="display: flex;"> 
-                                <span style="margin-right: 10px"> Powered by AiEditor, Characters: ${this.count} </span>
+                                <span style="margin-right: 10px"> 单词数: ${this.count} </span>
                             </div>
                             `;
         } else {
             this.innerHTML = `<div style="display: flex"> 
-                                <span> Powered by AiEditor, Characters: ${this.count} </span>
+                                <span>  单词数:  ${this.count} </span>
                                 <div style="width: 20px;height: 20px;overflow: hidden">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M12 16L6 10H18L12 16Z"></path></svg>
                                 </div>
@@ -82,16 +82,29 @@ export class Footer extends HTMLElement implements AiEditorEvent {
     }
 
     onCreate(props: EditorEvents["create"], _: AiEditorOptions): void {
-        this.count = props.editor.storage.characterCount.characters()
+        //this.count = props.editor.storage.characterCount.characters()
+        const str:string = props.editor.storage.markdown.getMarkdown();
+        this.count = this.getCharacterCount(str);
         this.updateCharacters()
     }
 
     onTransaction(props: EditorEvents["transaction"]): void {
-        const newCount = props.editor.storage.characterCount.characters();
+        const str:string = props.editor.storage.markdown.getMarkdown();
+        const newCount = this.getCharacterCount(str);
         if (newCount != this.count) {
             this.count = newCount
             this.updateCharacters()
         }
+    }
+
+    getCharacterCount(str: string): number {
+        const chinese = Array.from(str).filter((ch) => /[\u4e00-\u9fa5]/.test(ch));
+        const english = Array.from(str)
+            .map((ch) => (/[a-zA-Z0-9\s]/.test(ch) ? ch : ' '))
+            .join('')
+            .split(/\s+/)
+            .filter((s) => s);
+        return chinese.length + english.length;
     }
 
 }
