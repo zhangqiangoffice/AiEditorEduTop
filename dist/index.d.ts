@@ -302,6 +302,7 @@ declare class Footer extends HTMLElement implements AiEditorEvent {
     updateCharacters(): void;
     onCreate(props: EditorEvents["create"], _: AiEditorOptions): void;
     onTransaction(props: EditorEvents["transaction"]): void;
+    getCharacterCount(str: string): number;
 }
 
 declare class Header extends HTMLElement implements AiEditorEvent {

@@ -18039,31 +18039,28 @@ class V0 extends HTMLElement {
     }), this.addEventListener("mouseup", c);
   }
   updateCharacters() {
-    const str = this.getMarkdown()
-    const chinese = Array.from(str).filter((ch) => /[\u4e00-\u9fa5]/.test(ch));
-    const english = Array.from(str)
-      .map((ch) => (/[a-zA-Z0-9\s]/.test(ch) ? ch : ' '))
-      .join('')
-      .split(/\s+/)
-      .filter((s) => s);
-    const wordsCount = chinese.length + english.length
-    this.draggable ? this.innerHTML = `<div style="display: flex;padding: 10px"> 
-                                <span> 单词数: ${this.wordsCount} </span>
+    this.draggable ? this.innerHTML = `<div style="display: flex"> 
+                                <span>  单词数:  ${this.count} </span>
                                 <div style="width: 20px;height: 20px;overflow: hidden">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M12 16L6 10H18L12 16Z"></path></svg>
                                 </div>
                             </div>
-                            ` : this.innerHTML = `<div style="display: flex;padding: 10px;"> 
-                                <span style="margin-right: 10px"> 单词数: ${this.wordsCount} </span>
+                            ` : this.innerHTML = `<div style="display: flex;"> 
+                                <span style="margin-right: 10px"> 单词数: ${this.count} </span>
                             </div>
                             `;
   }
   onCreate(n, r) {
-    this.count = n.editor.storage.characterCount.characters(), this.updateCharacters();
+    const i = n.editor.storage.markdown.getMarkdown();
+    this.count = this.getCharacterCount(i), this.updateCharacters();
   }
   onTransaction(n) {
-    const r = n.editor.storage.characterCount.characters();
-    r != this.count && (this.count = r, this.updateCharacters());
+    const r = n.editor.storage.markdown.getMarkdown(), i = this.getCharacterCount(r);
+    i != this.count && (this.count = i, this.updateCharacters());
+  }
+  getCharacterCount(n) {
+    const r = Array.from(n).filter((s) => /[\u4e00-\u9fa5]/.test(s)), i = Array.from(n).map((s) => /[a-zA-Z0-9\s]/.test(s) ? s : " ").join("").split(/\s+/).filter((s) => s);
+    return r.length + i.length;
   }
 }
 const Kw = /^\s*>\s$/, Ww = ae.create({
