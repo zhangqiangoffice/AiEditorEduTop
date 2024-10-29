@@ -72,13 +72,18 @@ window.aiEditor = new AiEditor({
             //     model: "moonshot-v1-8k",
             //     apiKey: "sk-alQ96zb******"
             // },
+            // azure:{
+            //     // endpoint: "https://edutop.openai.azure.com",
+            //     // model: "GPT4O",
+            //     apiKey: ""
+            // }
             // gitee:{
             //     endpoint:"https://ai.gitee.com/api/inference/serverless/KGHCVOPBV7GY/chat/completions",
             //     apiKey:"***",
             // }
         },
         // bubblePanelEnable:false,
-        // bubblePanelModel: "spark",
+        // bubblePanelModel: "azure",
         onTokenConsume: (modelName, _modelConfig, count) => {
             console.log(modelName, " token count:" + count)
         },

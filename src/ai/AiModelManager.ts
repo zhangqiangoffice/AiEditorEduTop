@@ -6,6 +6,7 @@ import {CustomAiModel} from "./custom/CustomAiModel.ts";
 import {OpenaiAiModel} from "./openai/OpenaiAiModel.ts";
 import {InnerEditor} from "../core/AiEditor.ts";
 import {GiteeAiModel} from "./gitee/GiteeAiModel.ts";
+import {AzureOpenaiAiModel} from "./azure/AzureOpenaiAiModel.ts";
 
 export class AiModelManager {
 
@@ -29,6 +30,9 @@ export class AiModelManager {
                         break;
                     case "custom":
                         this.set(key, new CustomAiModel(editor, globalConfig))
+                        break;
+                    case "azure":
+                        this.set(key, new AzureOpenaiAiModel(editor, globalConfig))
                         break;
                     default:
                         const aiModel = globalConfig.modelFactory?.create(key, editor, globalConfig);

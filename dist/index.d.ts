@@ -256,6 +256,19 @@ export declare class AiModelManager {
     static set(modelName: string, aiModel: AiModel): void;
 }
 
+export declare class AzureOpenaiAiModel extends AiModel {
+    constructor(editor: InnerEditor, globalConfig: AiGlobalConfig);
+    createAiClient(url: string, listener: AiMessageListener): AiClient;
+    wrapPayload(prompt: string): string;
+    createAiClientUrl(): string;
+}
+
+export declare interface AzureOpenaiModelConfig extends AiModelConfig {
+    endpoint?: string;
+    apiKey: string;
+    model?: string;
+}
+
 export declare type BubbleMenuItem = {
     id: string;
     title?: string;
