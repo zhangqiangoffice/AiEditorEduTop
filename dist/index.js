@@ -18161,6 +18161,7 @@ class V0 extends HTMLElement {
   constructor() {
     super();
     D(this, "count", 0);
+    D(this, "selectCount", 0);
     D(this, "draggable", !0);
   }
   initDraggable(n) {
@@ -18181,28 +18182,38 @@ class V0 extends HTMLElement {
     }), this.addEventListener("mouseup", c);
   }
   updateCharacters() {
-    this.draggable ? this.innerHTML = `<div style="display: flex; padding: 10px;"> 
-                                <span>  单词数:  ${this.count} </span>
-                                <div style="width: 20px;height: 20px;overflow: hidden">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M12 16L6 10H18L12 16Z"></path></svg>
-                                </div>
-                            </div>
-                            ` : this.innerHTML = `<div style="display: flex; padding: 10px;"> 
-                                <span style="margin-right: 10px"> 单词数: ${this.count} </span>
-                            </div>
-                            `;
+    let n = this.selectCount ? `单词数: ${this.selectCount} / ${this.count}` : `单词数: ${this.count}`, r = "";
+    this.draggable && (r = `<div style="width: 20px;height: 20px;overflow: hidden">
+                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                           <path fill="none" d="M0 0h24v24H0z"></path>
+                           <path d="M12 16L6 10H18L12 16Z"></path>
+                       </svg>
+                   </div>`), this.innerHTML = `<div style="display: flex; padding: 10px;">
+                          <span style="margin-right: 10px">${n}</span>
+                          ${r}
+                      </div>`;
   }
   onCreate(n, r) {
-    const i = n.editor.storage.markdown.getMarkdown();
-    this.count = this.getCharacterCount(i), this.updateCharacters();
+    const { doc: i } = n.editor.state;
+    this.count = this.getCharacterCount(i.textContent), this.updateCharacters();
   }
   onTransaction(n) {
-    const r = n.editor.storage.markdown.getMarkdown(), i = this.getCharacterCount(r);
-    i != this.count && (this.count = i, this.updateCharacters());
+    const { selection: r, doc: i } = n.editor.state, s = this.getCharacterCount(i.textBetween(r.from, r.to)), o = i.textContent, a = this.getCharacterCount(o);
+    s != this.selectCount && (this.selectCount = s, this.updateCharacters()), a != this.count && (this.count = a, this.updateCharacters());
   }
+  // getCharacterCount(str: string): number {
+  //     const chinese = Array.from(str).filter((ch) => /[\u4e00-\u9fa5]/.test(ch));
+  //     const english = Array.from(str)
+  //         .map((ch) => (/[a-zA-Z0-9\s]/.test(ch) ? ch : ' '))
+  //         .join('')
+  //         .split(/\s+/)
+  //         .filter((s) => s);
+  //     return chinese.length + english.length;
+  // }
   getCharacterCount(n) {
-    const r = Array.from(n).filter((s) => /[\u4e00-\u9fa5]/.test(s)), i = Array.from(n).map((s) => /[a-zA-Z0-9\s]/.test(s) ? s : " ").join("").split(/\s+/).filter((s) => s);
-    return r.length + i.length;
+    n = n.replace(/[\u4e00-\u9fa5]+/g, " "), n = n.replace(/\n|\r|^\s+|\s+$/gi, ""), n = n.replace(/\s+/gi, " ");
+    var r = 0, i = n.match(/\s/g);
+    return i ? r = i.length + 1 : n && (r = 1), r;
   }
 }
 const jw = /^\s*>\s$/, Gw = ae.create({

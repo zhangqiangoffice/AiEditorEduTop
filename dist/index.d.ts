@@ -309,6 +309,7 @@ declare const defaultToolbarKeys: string[];
 
 declare class Footer extends HTMLElement implements AiEditorEvent {
     count: number;
+    selectCount: number;
     draggable: boolean;
     constructor();
     initDraggable(draggable?: boolean): void;

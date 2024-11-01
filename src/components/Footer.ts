@@ -5,6 +5,7 @@ import {EditorEvents} from "@tiptap/core";
 export class Footer extends HTMLElement implements AiEditorEvent {
 
     count: number = 0
+    selectCount:number = 0
     draggable: boolean = true;
 
     constructor() {
@@ -65,47 +66,79 @@ export class Footer extends HTMLElement implements AiEditorEvent {
     }
 
     updateCharacters() {
-        if (!this.draggable) {
-            this.innerHTML = `<div style="display: flex; padding: 10px;"> 
-                                <span style="margin-right: 10px"> 单词数: ${this.count} </span>
-                            </div>
-                            `;
-        } else {
-            this.innerHTML = `<div style="display: flex; padding: 10px;"> 
-                                <span>  单词数:  ${this.count} </span>
-                                <div style="width: 20px;height: 20px;overflow: hidden">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M12 16L6 10H18L12 16Z"></path></svg>
-                                </div>
-                            </div>
-                            `;
+        let wordCountText = this.selectCount ? `单词数: ${this.selectCount} / ${this.count}` : `单词数: ${this.count}`;
+        let svgIcon = '';
+
+        if (this.draggable) {
+            svgIcon = `<div style="width: 20px;height: 20px;overflow: hidden">
+                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                           <path fill="none" d="M0 0h24v24H0z"></path>
+                           <path d="M12 16L6 10H18L12 16Z"></path>
+                       </svg>
+                   </div>`;
         }
+
+        this.innerHTML = `<div style="display: flex; padding: 10px;">
+                          <span style="margin-right: 10px">${wordCountText}</span>
+                          ${svgIcon}
+                      </div>`;
     }
 
     onCreate(props: EditorEvents["create"], _: AiEditorOptions): void {
         //this.count = props.editor.storage.characterCount.characters()
-        const str:string = props.editor.storage.markdown.getMarkdown();
-        this.count = this.getCharacterCount(str);
-        this.updateCharacters()
+        // const str:string = props.editor.storage.markdown.getMarkdown();
+        const {doc} = props.editor!.state;
+        this.count = this.getCharacterCount(doc.textContent);
+        this.updateCharacters();
     }
 
     onTransaction(props: EditorEvents["transaction"]): void {
-        const str:string = props.editor.storage.markdown.getMarkdown();
+        const {selection, doc} = props.editor!.state
+        const selectedText = this.getCharacterCount(doc.textBetween(selection.from, selection.to)) ;
+
+        //const str:string = props.editor.storage.markdown.getMarkdown();
+        const str:string = doc.textContent;
         const newCount = this.getCharacterCount(str);
+
+        if(selectedText != this.selectCount){
+            this.selectCount = selectedText;
+            this.updateCharacters();
+        }
+
         if (newCount != this.count) {
-            this.count = newCount
-            this.updateCharacters()
+            this.count = newCount;
+            this.updateCharacters();
         }
     }
 
-    getCharacterCount(str: string): number {
-        const chinese = Array.from(str).filter((ch) => /[\u4e00-\u9fa5]/.test(ch));
-        const english = Array.from(str)
-            .map((ch) => (/[a-zA-Z0-9\s]/.test(ch) ? ch : ' '))
-            .join('')
-            .split(/\s+/)
-            .filter((s) => s);
-        return chinese.length + english.length;
+    // getCharacterCount(str: string): number {
+    //     const chinese = Array.from(str).filter((ch) => /[\u4e00-\u9fa5]/.test(ch));
+    //     const english = Array.from(str)
+    //         .map((ch) => (/[a-zA-Z0-9\s]/.test(ch) ? ch : ' '))
+    //         .join('')
+    //         .split(/\s+/)
+    //         .filter((s) => s);
+    //     return chinese.length + english.length;
+    // }
+    getCharacterCount(str: string) {
+        //console.log(str)
+        str = str.replace(/[\u4e00-\u9fa5]+/g, " ");
+        // 将换行符，前后空格不计算为单词数
+        str = str.replace(/\n|\r|^\s+|\s+$/gi,"");
+        // 多个空格替换成一个空格
+        str = str.replace(/\s+/gi," ");
+        // 更新计数
+        var length = 0;
+        var match = str.match(/\s/g);
+        if (match) {
+            length = match.length + 1;
+        } else if (str) {
+            length = 1;
+        }
+
+        return length;
     }
+
 
 }
 

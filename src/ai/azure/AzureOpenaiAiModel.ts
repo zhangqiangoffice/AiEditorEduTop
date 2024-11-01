@@ -71,5 +71,4 @@ export class AzureOpenaiAiModel extends AiModel {
         return `${config.endpoint}/openai/deployments/${config.model}/chat/completions?api-version=2024-08-01-preview`;
     }
 }
-//https://edutop.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-08-01-preview
-//https://edutop.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-08-01-preview
+
