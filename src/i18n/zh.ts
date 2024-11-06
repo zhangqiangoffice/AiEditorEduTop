@@ -113,6 +113,9 @@ export const zh  =  {
     "ai-append":"追加",
     "ai-replace":"替换",
     "ai-cancel":"舍弃",
+    "paraphrase-writing":"转述",
+    "vividly-writing":"展现画面",
+    "automatic-selecting":"自动选择",
 
     ///ai menus
     "ai-continuation":"AI 续写",

@@ -115,6 +115,9 @@ export const en =  {
     "ai-append":"Append",
     "ai-replace":"Replace",
     "ai-cancel":"Cancel",
+    "paraphrase-writing":"Paraphrase Writing",
+    "vividly-writing":"Vividly Writing",
+    "automatic-selecting":"Automatic Selecting",
 
     ///ai menus
     "ai-continuation":"Continuation",

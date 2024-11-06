@@ -113,7 +113,10 @@ export const pt =  {
     "ai-append": "Anexar",
     "ai-replace": "Substituir",
     "ai-cancel": "Cancelar",
-    
+    "paraphrase-writing":"Escritura de traducción libre",
+    "vividly-writing":"Escritura vívida",
+    "automatic-selecting":"Selección automática",
+
     /// ai menus
     "ai-continuation": "Sugestões de continuação",
     "ai-optimization": "Otimização",

@@ -113,7 +113,10 @@ export const de =  {
     "ai-append": "Anhängen",
     "ai-replace": "Ersetzen",
     "ai-cancel": "Abbrechen",
-    
+    "paraphrase-writing":"Paraphrasen Schreiben",
+    "vividly-writing":"Schreib lebhaft",
+    "automatic-selecting":"automatische Auswahl",
+
     /// ai menus
     "ai-continuation": "Vorschläge für Fortsetzung",
     "ai-optimization": "Optimierung",
