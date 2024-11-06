@@ -14,6 +14,10 @@ export type AIBubbleMenuItem = {
     prompt: string,
     icon: string,
     title: string,
+    temperature: number,
+    top_p: number,
+    frequency: number,
+    presence: number,
 } | string;
 
 export type TranslateMenuItem = {

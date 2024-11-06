@@ -51,8 +51,22 @@ export class AzureOpenaiAiModel extends AiModel {
         });
     }
 
-    wrapPayload(prompt: string) {
+    wrapPayload(prompt: string, parameter:string="") {
         const config = this.aiModelConfig as AzureOpenaiModelConfig;
+
+        let temperature = 1
+        let topP = 1
+        let frequencyPenalty = 0
+        let presencePenalty = 0
+
+        if(parameter){
+            const parameterObj = JSON.parse(parameter)
+            temperature = Number(parameterObj.temperature);
+            topP = Number(parameterObj.top_p);
+            frequencyPenalty = Number(parameterObj.frequency_penalty);
+            presencePenalty = Number(parameterObj.presence_penalty);
+        }
+
         const payload = {
             "model": config.model,
             "messages": [
@@ -61,7 +75,11 @@ export class AzureOpenaiAiModel extends AiModel {
                     "content": prompt,
                 }
             ],
-            "stream": true
+            "stream": true,
+            "temperature": temperature,
+            "top_p": topP,
+            "frequency_penalty": frequencyPenalty,
+            "presence_penalty": presencePenalty
         };
         return JSON.stringify(payload);
     }

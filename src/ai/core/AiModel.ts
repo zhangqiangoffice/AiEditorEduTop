@@ -36,11 +36,11 @@ export abstract class AiModel {
     }
 
 
-    chat(selectedText: string, prompt: string, listener: AiMessageListener): void {
+    chat(selectedText: string, prompt: string, parameter:string="", listener: AiMessageListener): void {
         const onSuccess = (url: string) => {
             const aiClient = this.createAiClient(url, listener);
             const finalPrompt = prompt.includes("{content}") ? prompt.split('{content}').join(selectedText) : `${selectedText}\n${prompt}`
-            const payload = this.wrapPayload(finalPrompt);
+            const payload = this.wrapPayload(finalPrompt, parameter);
             aiClient.start(typeof payload === "string" ? payload : JSON.stringify(payload))
         }
 
@@ -69,8 +69,9 @@ export abstract class AiModel {
     /**
      * 封装消息，把 prompt 转换为协议需要的格式
      * @param prompt
+     * @param parameter
      */
-    abstract wrapPayload(prompt: string): any;
+    abstract wrapPayload(prompt: string, parameter:string): any;
 
 
 }
