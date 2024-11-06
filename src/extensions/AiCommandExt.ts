@@ -51,7 +51,7 @@ export const AiCommandExt = Extension.create<AiCommandOptions>({
                 char: '/',
                 command: ({editor, range, props}) => {
                     editor.chain().focus().deleteRange(range).run();
-
+                    const parameter ="";
                     if (props && props.aiItem) {
                         let aiCommand = props.aiItem as AiMenu;
                         const selectedText = editor.state.selection.$head.parent.textContent;
@@ -59,7 +59,7 @@ export const AiCommandExt = Extension.create<AiCommandOptions>({
                         let useModelType = aiCommand.model!;
                         const aiModel = AiModelManager.get(aiCommand.model!);
                         if (aiModel) {
-                            aiModel?.chat(selectedText, aiCommand.prompt!, new DefaultAiMessageListener(editor));
+                            aiModel?.chat(selectedText, aiCommand.prompt!, parameter, new DefaultAiMessageListener(editor));
                         } else {
                             console.error("Ai model config error. can not find the type:" + useModelType + " at command menu")
                         }

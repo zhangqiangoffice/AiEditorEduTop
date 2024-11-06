@@ -27,6 +27,10 @@ export declare type AIBubbleMenuItem = {
     prompt: string;
     icon: string;
     title: string;
+    temperature: number;
+    top_p: number;
+    frequency: number;
+    presence: number;
 } | string;
 
 export declare interface AiClient {
@@ -226,7 +230,7 @@ declare abstract class AiModel {
     aiModelConfig: AiModelConfig;
     protected constructor(editor: InnerEditor, globalConfig: AiGlobalConfig, aiModelName: string);
     chatWithPayload(payload: any, listener: AiMessageListener): void;
-    chat(selectedText: string, prompt: string, listener: AiMessageListener): void;
+    chat(selectedText: string, prompt: string, parameter: string | undefined, listener: AiMessageListener): void;
     /**
      * 创建客户端链接 URL
      */
@@ -238,8 +242,9 @@ declare abstract class AiModel {
     /**
      * 封装消息，把 prompt 转换为协议需要的格式
      * @param prompt
+     * @param parameter
      */
-    abstract wrapPayload(prompt: string): any;
+    abstract wrapPayload(prompt: string, parameter: string): any;
 }
 
 declare interface AiModelConfig {
@@ -259,7 +264,7 @@ export declare class AiModelManager {
 export declare class AzureOpenaiAiModel extends AiModel {
     constructor(editor: InnerEditor, globalConfig: AiGlobalConfig);
     createAiClient(url: string, listener: AiMessageListener): AiClient;
-    wrapPayload(prompt: string): string;
+    wrapPayload(prompt: string, parameter?: string): string;
     createAiClientUrl(): string;
 }
 

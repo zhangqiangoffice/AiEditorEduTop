@@ -196,10 +196,10 @@ export const CodeBlockExt = CodeBlockLowlight.extend<MyCodeBlockLowlightOptions>
             addCodeComments: (node, pos) => ({editor}) => {
                 const {storage, view: {dispatch}, state: {tr}} = editor;
                 dispatch(tr.setSelection(NodeSelection.create(editor.state.doc, pos)).deleteSelection())
-
+                const parameter ="";
                 const markdown = storage.markdown.serializer.serialize(node);
                 const aiModel = AiModelManager.get(this.options.codeCommentsAi!.model);
-                aiModel.chat(markdown, this.options.codeCommentsAi!.prompt, new DefaultAiMessageListener(editor, {
+                aiModel.chat(markdown, this.options.codeCommentsAi!.prompt, parameter, new DefaultAiMessageListener(editor, {
                     markdownParseEnable: true,
                     useMarkdownTextOnly: true,
                 }))
@@ -222,8 +222,8 @@ export const CodeBlockExt = CodeBlockLowlight.extend<MyCodeBlockLowlightOptions>
 
                 const markdown = storage.markdown.serializer.serialize(node);
                 const aiModel = AiModelManager.get(this.options.codeExplainAi!.model);
-
-                aiModel?.chat(markdown, this.options.codeExplainAi!.prompt, new DefaultAiMessageListener(editor));
+                const parameter ="";
+                aiModel?.chat(markdown, this.options.codeExplainAi!.prompt, parameter, new DefaultAiMessageListener(editor));
                 return true;
             },
 

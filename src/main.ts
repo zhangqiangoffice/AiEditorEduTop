@@ -72,11 +72,11 @@ window.aiEditor = new AiEditor({
             //     model: "moonshot-v1-8k",
             //     apiKey: "sk-alQ96zb******"
             // },
-            azure:{
-                // endpoint: "https://edutop.openai.azure.com",
-                // model: "GPT4O",
-                apiKey: "f1da31d5239b4fb5ace2184e40bb0f5f"
-            }
+            // azure:{
+            //     // endpoint: "https://edutop.openai.azure.com",
+            //     // model: "GPT4O",
+            //     apiKey: ""
+            // }
             // gitee:{
             //     endpoint:"https://ai.gitee.com/api/inference/serverless/KGHCVOPBV7GY/chat/completions",
             //     apiKey:"***",

@@ -122,11 +122,11 @@ export class Ai extends AbstractDropdownMenuButton<AiMenu> {
     onDropdownItemClick(index: number): void {
         const aiMenu = this.menuData[index];
         const selectedText = this.getSelectedText(aiMenu.text!);
-
+        const parameter ="";
         if (selectedText) {
             const aiModel = AiModelManager.get(aiMenu.model!);
             if (aiModel) {
-                aiModel?.chat(selectedText, aiMenu.prompt!, new DefaultAiMessageListener(this.editor!));
+                aiModel?.chat(selectedText, aiMenu.prompt!, parameter, new DefaultAiMessageListener(this.editor!));
             } else {
                 console.error("Ai model config error.")
             }

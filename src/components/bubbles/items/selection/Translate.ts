@@ -35,8 +35,9 @@ const startChat = (holder: Holder, lang: string) => {
             prompt = `请帮我把以下内容翻译为: ${lang}，并返回翻译结果。注意：只需要翻译的结果，不需要解释！您需要翻译的内容是：\n${selectedText}`
         }
         const aiModel = AiModelManager.get("auto");
+        let parameter="";
         if (aiModel) {
-            aiModel.chat(selectedText, prompt, {
+            aiModel.chat(selectedText, prompt, parameter, {
                 onStart(aiClient) {
                     holder.aiClient = aiClient;
                 },
