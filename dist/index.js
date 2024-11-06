@@ -39004,10 +39004,10 @@ ${l}`);
 }, PS = (t, e) => {
   const n = document.createElement("div");
   return n.classList.add("aie-translate-panel"), n.innerHTML = `
-      <div class="aie-translate-panel-body">
+      <div class="aie-ai-panel-footer">
         ${e.map((r) => typeof r == "string" ? `<p data-lang="${r}">${ce(r)} </p>` : `<p data-lang="${r.language || r.title}">${ce(r.title)} </p>`).join("")}
         </div>
-        `, n.querySelectorAll(".aie-translate-panel-body p").forEach((r) => {
+        `, n.querySelectorAll(".aie-ai-panel-footer p").forEach((r) => {
     const i = r.getAttribute("data-lang");
     r.addEventListener("click", () => {
       var s;

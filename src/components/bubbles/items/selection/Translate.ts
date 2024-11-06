@@ -57,7 +57,7 @@ const createTranslatePanelElement = (holder: Holder, menuItems: TranslateMenuIte
     const container = document.createElement("div");
     container.classList.add("aie-translate-panel")
     container.innerHTML = `
-      <div class="aie-translate-panel-body">
+      <div class="aie-ai-panel-footer">
         ${menuItems.map((menuItem) => {
         return typeof menuItem === "string" ? `<p data-lang="${menuItem}">${t(menuItem)} </p>`
             : `<p data-lang="${menuItem.language || menuItem.title}">${t(menuItem.title)} </p>`;
@@ -65,7 +65,7 @@ const createTranslatePanelElement = (holder: Holder, menuItems: TranslateMenuIte
         </div>
         `;
 
-    container.querySelectorAll(".aie-translate-panel-body p").forEach((element) => {
+    container.querySelectorAll(".aie-ai-panel-footer p").forEach((element) => {
         const lang = element.getAttribute("data-lang")!;
         element.addEventListener("click", () => {
             holder.translatePanelInstance?.hide()
