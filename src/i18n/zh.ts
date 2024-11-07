@@ -115,7 +115,7 @@ export const zh  =  {
     "ai-cancel":"舍弃",
     "paraphrase-writing":"转述",
     "vividly-writing":"展现画面",
-    "automatic-selecting":"自动选择",
+    "automatic-selecting":"筛选句子",
 
     ///ai menus
     "ai-continuation":"AI 续写",
