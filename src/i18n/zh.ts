@@ -116,6 +116,7 @@ export const zh  =  {
     "paraphrase-writing":"转述",
     "vividly-writing":"展现画面",
     "automatic-selecting":"智能筛选素材",
+    "humanize":"仿人类写作",
 
     ///ai menus
     "ai-continuation":"AI 续写",

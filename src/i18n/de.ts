@@ -116,6 +116,7 @@ export const de =  {
     "paraphrase-writing":"Paraphrasen Schreiben",
     "vividly-writing":"Schreib lebhaft",
     "automatic-selecting":"automatische Auswahl",
+    "humanize":"Menschliches Schreiben nachahmen",
 
     /// ai menus
     "ai-continuation": "Vorschläge für Fortsetzung",

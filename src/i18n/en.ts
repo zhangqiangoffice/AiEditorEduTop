@@ -118,6 +118,7 @@ export const en =  {
     "paraphrase-writing":"Paraphrase Writing",
     "vividly-writing":"Vividly Writing",
     "automatic-selecting":"Automatic Selecting",
+    "humanize":"humanize",
 
     ///ai menus
     "ai-continuation":"Continuation",

@@ -6,8 +6,9 @@ import {Strike} from "./Strike.ts";
 import {Italic} from "./Italic.ts";
 import {MenuRecord} from "../MenuRecord.ts";
 import {Translate} from "./Translate.ts";
+import {Humanize} from "./Humanize.ts";
 
 export const AllSelectionMenuItems = new MenuRecord(
-    [AI, Bold, Italic, Underline, Strike, Translate, Code]
+    [AI, Bold, Italic, Underline, Strike, Translate, Code, Humanize]
 )
 

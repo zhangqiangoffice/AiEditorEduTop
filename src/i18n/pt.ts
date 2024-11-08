@@ -116,6 +116,7 @@ export const pt =  {
     "paraphrase-writing":"Escritura de traducción libre",
     "vividly-writing":"Escritura vívida",
     "automatic-selecting":"Selección automática",
+    "humanize":"Imitación de escritura humana",
 
     /// ai menus
     "ai-continuation": "Sugestões de continuação",
