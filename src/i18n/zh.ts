@@ -105,7 +105,7 @@ export const zh  =  {
     "tip-you-can-enter-text-above-or-select-the-operation-below":"提示：您可以在上面输入文字或者选择下方的操作",
     "you-can-do-the-following":"您可以进行以下操作:",
     "improve-writing":"改进写作",
-    "check-spelling-and-grammar":"检查拼写和语法",
+    "check-spelling-and-grammar":"修改语法",
     "make-shorter":"简化内容",
     "make-longer":"丰富内容",
     "translate":"翻译",
