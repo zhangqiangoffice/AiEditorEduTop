@@ -117,6 +117,7 @@ export const de =  {
     "vividly-writing":"Schreib lebhaft",
     "automatic-selecting":"automatische Auswahl",
     "humanize":"Menschliches Schreiben nachahmen",
+    "why-school":"Individuelle Wahl der Schule",
 
     /// ai menus
     "ai-continuation": "Vorschläge für Fortsetzung",

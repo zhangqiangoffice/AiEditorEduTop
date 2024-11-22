@@ -117,6 +117,7 @@ export const pt =  {
     "vividly-writing":"Escritura vívida",
     "automatic-selecting":"Selección automática",
     "humanize":"Imitación de escritura humana",
+    "why-school":"Elección individual de la escuela",
 
     /// ai menus
     "ai-continuation": "Sugestões de continuação",

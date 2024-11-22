@@ -119,6 +119,7 @@ export const en =  {
     "vividly-writing":"Vividly Writing",
     "automatic-selecting":"Automatic Selecting",
     "humanize":"humanize",
+    "why-school":"Reasons for personalized school selection",
 
     ///ai menus
     "ai-continuation":"Continuation",

@@ -117,6 +117,7 @@ export const zh  =  {
     "vividly-writing":"展现画面",
     "automatic-selecting":"智能筛选素材",
     "humanize":"仿人类写作",
+    "why-school":"个性化选校理由",
 
     ///ai menus
     "ai-continuation":"AI 续写",
