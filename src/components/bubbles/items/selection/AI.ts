@@ -55,7 +55,7 @@ export const defaultAiPanelMenus = [
         presence: 0,
     },
     {
-        prompt: `请根据这一段课程介绍，帮我写一段200words的why school，英文.主语用I。再写一句career goal after graduation(15words左右),`,
+        prompt: `Based on this course description, write a "why school" paragraph in 250-300 words in English. Use more various expressions for the beginning sentence, more verbs, not only "choosing". Use first-person. 最后一句话总结这个学校项目会让我学到知识或者技能，推动我更好的就业，且每个内容一定要和学生自己的具体专业方向联系起来，不能泛泛而谈。`,
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 4C8 5.10457 7.10457 6 6 6 4.89543 6 4 5.10457 4 4 4 2.89543 4.89543 2 6 2 7.10457 2 8 2.89543 8 4ZM5 16V22H3V10C3 8.34315 4.34315 7 6 7 6.82059 7 7.56423 7.32946 8.10585 7.86333L10.4803 10.1057 12.7931 7.79289 14.2073 9.20711 10.5201 12.8943 9 11.4587V22H7V16H5ZM10 5H19V14H10V16H14.3654L17.1889 22H19.3993L16.5758 16H20C20.5523 16 21 15.5523 21 15V4C21 3.44772 20.5523 3 20 3H10V5Z"></path></svg>`,
         title: 'why-school',
         temperature: 1,
