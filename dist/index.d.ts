@@ -273,6 +273,7 @@ export declare interface AzureOpenaiModelConfig extends AiModelConfig {
     apiKey: string;
     model?: string;
     undetectableApiKey?: string;
+    difyGrammarlyApiKey?: string;
 }
 
 export declare type BubbleMenuItem = {

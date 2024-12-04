@@ -40,10 +40,12 @@ class AsyncHTTPClient {
 class AIToolsClient {
     private client: AsyncHTTPClient;
     private apiKey: string | undefined;
+    private grammarlyApiKey: string | undefined;
 
-    constructor(apiKey: string) {
+    constructor(apiKey: string, grammarlyApiKey?: string) {
         this.client = new AsyncHTTPClient();
         this.apiKey = apiKey;
+        this.grammarlyApiKey = grammarlyApiKey;
     }
 
     async humanizeText(content: string, strength: string = "Balanced", purpose: string = "General Writing", readability: string = "University"): Promise<string> {
@@ -69,7 +71,7 @@ class AIToolsClient {
             const documentPayload = { id: docId };
             const documentUrl = "https://humanize.undetectable.ai/document";
 
-            const timeout = 120 * 1000; // 2 minutes in milliseconds
+            const timeout = 60 * 1000; // 1 minutes in milliseconds
             const pollingInterval = 5000; // 5 seconds in milliseconds
             const startTime = Date.now();
 
@@ -92,13 +94,64 @@ class AIToolsClient {
             return `Error: Unable to humanize text - ${error}`;
         }
     }
+
+    async gammerlyText(content: string) {
+        const url = "https://api.dify.ai/v1/workflows/run"
+        const key = this.grammarlyApiKey;
+
+        const headers = {
+            'Authorization': `Bearer ${key}`,
+            'Content-Type': 'application/json',
+        };
+
+        const data = {
+            inputs: {
+                Para: content
+            },
+            response_mode: "blocking",
+            user: "edutop"
+        };
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                return '';
+                // throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const responseData = await response.json();
+
+            if (responseData.data.status === 'succeeded') {
+                // 请求成功
+                const refinedArticle = responseData.data.outputs['Refined Article'] || '';
+
+                let grammarText = '';
+                const contextMatch = refinedArticle.match(/<context>(.*?)<\/context>/s);
+                if (contextMatch) {
+                    grammarText = contextMatch[1].trim();
+                } else {
+                    grammarText = refinedArticle.trim();
+                }
+                return grammarText;
+            } else {
+                return '';
+            }
+        } catch (e) {
+            console.error(`取纠正语法后的文本内容失败: ${e}`);
+            return '';
+        }
+    }
 }
 
 let aiToolsClient: AIToolsClient | null = null;
 
-async function getAiToolsClient(apiKey: string): Promise<AIToolsClient> {
+async function getAiToolsClient(apiKey: string, grammarlyApiKey: string): Promise<AIToolsClient> {
     if (!aiToolsClient) {
-        aiToolsClient = new AIToolsClient(apiKey);
+        aiToolsClient = new AIToolsClient(apiKey, grammarlyApiKey);
     }
     return aiToolsClient;
 }
@@ -113,13 +166,25 @@ const startChat = async (holder: Holder) => {
         const aiModel = AiModelManager.get("auto");
         const config = aiModel.aiModelConfig as AzureOpenaiModelConfig;
 
+        const grammarlyApiKey = config.difyGrammarlyApiKey ? config.difyGrammarlyApiKey :"";
+        let content: string | null = null;
         if (config.undetectableApiKey) {
-            const aiToolsClient = await getAiToolsClient(config.undetectableApiKey);
+            const aiToolsClient = await getAiToolsClient(config.undetectableApiKey,grammarlyApiKey);
+            // 仿人类写作
             const humanizedText = await aiToolsClient.humanizeText(selectedText);
-            // console.log(humanizedText);
+            // console.log("humanizedText:",humanizedText);
+            if(humanizedText.startsWith("Error:")){
+                content = humanizedText;
+            }
+            else{
+                // dify 语法纠正
+                const garmmarlyText = await aiToolsClient.gammerlyText(humanizedText);
+                // console.log("garmmarlyText:",garmmarlyText);
+                content = garmmarlyText ? garmmarlyText:humanizedText;
+            }
 
             let parameter="";
-            const prompt = `请帮我把以下内容删除多余的空格。注意：只需要删除多余的空格，不需要做任何修改！您需要删除多余的空格的内容是：\n${humanizedText}`
+            const prompt = `请帮我把以下内容删除多余的空格。注意：只需要删除多余的空格，内容不需要做任何修改！您需要删除多余的空格的内容是：\n${content}`
             if (aiModel) {
                 aiModel.chat(selectedText, prompt, parameter, {
                     onStart(aiClient) {

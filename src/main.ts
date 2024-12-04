@@ -76,7 +76,8 @@ window.aiEditor = new AiEditor({
             //     // endpoint: "https://edutop.openai.azure.com",
             //     // model: "GPT4O",
             //     apiKey: "",
-            //     undetectableApiKey:""
+            //     undetectableApiKey:"",
+            //     difyGrammarlyApiKey:""
             // }
             // gitee:{
             //     endpoint:"https://ai.gitee.com/api/inference/serverless/KGHCVOPBV7GY/chat/completions",
