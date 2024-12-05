@@ -155,12 +155,10 @@ const createAiPanelElement = (holder: Holder, aiBubbleMenuItems: AIBubbleMenuIte
     container.innerHTML = `
         <div class="aie-ai-panel-body">
             <div class="aie-ai-panel-body-content" style="height: 175px;display: none"><div class="loader">${Svgs.refresh}</div><textarea readonly></textarea></div>
-            <div class="aie-ai-panel-body-input">
-                <textarea id="prompt" placeholder="${t('placeholder-tell-ai-what-to-do-next')}" rows="1"></textarea>
-                <button type="button" id="go" style="width: 30px;height: 30px">${Svgs.aiPanelStart}</button>
-            </div>
+            <div class="aie-ai-panel-body-input"><input id="prompt" placeholder="${t('placeholder-tell-ai-what-to-do-next')}" type="text" />
+            <button type="button" id="go" style="width: 30px;height: 30px">${Svgs.aiPanelStart}</button></div>
             <div class="aie-ai-panel-body-tips"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17C9 17 16 18 19 21H20C20.5523 21 21 20.5523 21 20V13.937C21.8626 13.715 22.5 12.9319 22.5 12C22.5 11.0681 21.8626 10.285 21 10.063V4C21 3.44772 20.5523 3 20 3H19C16 6 9 7 9 7H5C3.89543 7 3 7.89543 3 9V15C3 16.1046 3.89543 17 5 17H6L7 22H9V17ZM11 8.6612C11.6833 8.5146 12.5275 8.31193 13.4393 8.04373C15.1175 7.55014 17.25 6.77262 19 5.57458V18.4254C17.25 17.2274 15.1175 16.4499 13.4393 15.9563C12.5275 15.6881 11.6833 15.4854 11 15.3388V8.6612ZM5 9H9V15H5V9Z" fill="currentColor"></path></svg>
-                ${t("tip-you-can-enter-text-above-or-select-the-operation-below")}</div>
+            ${t("tip-you-can-enter-text-above-or-select-the-operation-below")}</div>
         </div>
         <div class="aie-ai-panel-footer" style="display: none">
         <div class="aie-ai-panel-footer-tips">${t("you-can-do-the-following")}</div>
@@ -231,22 +229,6 @@ const createAiPanelElement = (holder: Holder, aiBubbleMenuItems: AIBubbleMenuIte
             startChat(holder, container, prompt, JSON.stringify(parameter));
         })
     })
-
-    // 添加自动调整高度的功能
-    const promptTextarea = container.querySelector("#prompt") as HTMLTextAreaElement;
-    if (promptTextarea) {
-        // 初始化时调整高度
-        const adjustHeight = () => {
-            promptTextarea.style.height = 'auto';
-            promptTextarea.style.height = promptTextarea.scrollHeight + 'px';
-        };
-        
-        // 监听输入事件
-        promptTextarea.addEventListener('input', adjustHeight);
-        
-        // 初始化时设置高度
-        window.setTimeout(adjustHeight, 0);
-    }
 
     return container;
 }

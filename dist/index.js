@@ -38899,7 +38899,9 @@ const $o = {
   else {
     const o = e.querySelector("textarea");
     o.value = "";
-    const { selection: a, doc: l } = t.editor.state, u = l.textBetween(a.from, a.to), c = t.editor.aiEditor.options, d = mn.get((i = c.ai) == null ? void 0 : i.bubblePanelModel);
+    const { selection: a, doc: l } = t.editor.state, u = l.textBetween(a.from, a.to);
+    console.log(u);
+    const c = t.editor.aiEditor.options, d = mn.get((i = c.ai) == null ? void 0 : i.bubblePanelModel);
     d ? d.chat(u, n, r, {
       onStart(f) {
         t.aiClient = f, e.querySelector(".aie-ai-panel-actions").style.display = "none", e.querySelector(".loader").style.display = "block", e.querySelector(".aie-ai-panel-body-content").style.display = "block", e.querySelector("#go").innerHTML = $o.aiPanelStop;
@@ -38914,15 +38916,13 @@ const $o = {
   }
 }, N_ = (t, e) => {
   const n = document.createElement("div");
-  n.classList.add("aie-ai-panel"), n.innerHTML = `
+  return n.classList.add("aie-ai-panel"), n.innerHTML = `
         <div class="aie-ai-panel-body">
             <div class="aie-ai-panel-body-content" style="height: 175px;display: none"><div class="loader">${$o.refresh}</div><textarea readonly></textarea></div>
-            <div class="aie-ai-panel-body-input">
-                <textarea id="prompt" placeholder="${ce("placeholder-tell-ai-what-to-do-next")}" rows="1"></textarea>
-                <button type="button" id="go" style="width: 30px;height: 30px">${$o.aiPanelStart}</button>
-            </div>
+            <div class="aie-ai-panel-body-input"><input id="prompt" placeholder="${ce("placeholder-tell-ai-what-to-do-next")}" type="text" />
+            <button type="button" id="go" style="width: 30px;height: 30px">${$o.aiPanelStart}</button></div>
             <div class="aie-ai-panel-body-tips"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17C9 17 16 18 19 21H20C20.5523 21 21 20.5523 21 20V13.937C21.8626 13.715 22.5 12.9319 22.5 12C22.5 11.0681 21.8626 10.285 21 10.063V4C21 3.44772 20.5523 3 20 3H19C16 6 9 7 9 7H5C3.89543 7 3 7.89543 3 9V15C3 16.1046 3.89543 17 5 17H6L7 22H9V17ZM11 8.6612C11.6833 8.5146 12.5275 8.31193 13.4393 8.04373C15.1175 7.55014 17.25 6.77262 19 5.57458V18.4254C17.25 17.2274 15.1175 16.4499 13.4393 15.9563C12.5275 15.6881 11.6833 15.4854 11 15.3388V8.6612ZM5 9H9V15H5V9Z" fill="currentColor"></path></svg>
-                ${ce("tip-you-can-enter-text-above-or-select-the-operation-below")}</div>
+            ${ce("tip-you-can-enter-text-above-or-select-the-operation-below")}</div>
         </div>
         <div class="aie-ai-panel-footer" style="display: none">
         <div class="aie-ai-panel-footer-tips">${ce("you-can-do-the-following")}</div>
@@ -38938,47 +38938,39 @@ const $o = {
         <!--aie-ai-panel-actions-->
         <div class="aie-ai-panel-footer aie-ai-panel-actions" >
         <div class="aie-ai-panel-footer-tips">${ce("you-can-do-the-following")}</div>
-        ${e.map((i) => typeof i == "string" ? i : `<p data-prompt="${i.prompt}"
-                data-temperature="${i.temperature}"
-                data-topP="${i.top_p}"
-                data-frequencyPenalty="${i.frequency}"
-                data-presencePenalty="${i.presence}"
-            >${i.icon} ${ce(i.title)} </p>`).join("")}
+        ${e.map((r) => typeof r == "string" ? r : `<p data-prompt="${r.prompt}"
+                data-temperature="${r.temperature}"
+                data-topP="${r.top_p}"
+                data-frequencyPenalty="${r.frequency}"
+                data-presencePenalty="${r.presence}"
+            >${r.icon} ${ce(r.title)} </p>`).join("")}
         </div>
         `, n.querySelector("#replace").addEventListener("click", () => {
-    var s, o;
-    const i = n.querySelector("textarea");
-    if (i.value) {
-      const { state: { selection: a, tr: l }, view: { dispatch: u }, schema: c } = t.editor, d = c.text(i.value);
-      u(l.replaceRangeWith(a.from, a.to, d)), (s = t.aiPanelInstance) == null || s.hide(), (o = t.tippyInstance) == null || o.show();
+    var i, s;
+    const r = n.querySelector("textarea");
+    if (r.value) {
+      const { state: { selection: o, tr: a }, view: { dispatch: l }, schema: u } = t.editor, c = u.text(r.value);
+      l(a.replaceRangeWith(o.from, o.to, c)), (i = t.aiPanelInstance) == null || i.hide(), (s = t.tippyInstance) == null || s.show();
     }
   }), n.querySelector("#insert").addEventListener("click", () => {
-    var s, o;
-    const i = n.querySelector("textarea");
-    if (i.value) {
-      const { state: { selection: a, tr: l }, view: { dispatch: u } } = t.editor;
-      u(l.insertText(i.value, a.to)), (s = t.aiPanelInstance) == null || s.hide(), (o = t.tippyInstance) == null || o.show();
+    var i, s;
+    const r = n.querySelector("textarea");
+    if (r.value) {
+      const { state: { selection: o, tr: a }, view: { dispatch: l } } = t.editor;
+      l(a.insertText(r.value, o.to)), (i = t.aiPanelInstance) == null || i.hide(), (s = t.tippyInstance) == null || s.show();
     }
   }), n.querySelector("#hide").addEventListener("click", () => {
-    var i, s;
-    (i = t.aiPanelInstance) == null || i.hide(), (s = t.tippyInstance) == null || s.show();
+    var r, i;
+    (r = t.aiPanelInstance) == null || r.hide(), (i = t.tippyInstance) == null || i.show();
   }), n.querySelector("#go").addEventListener("click", () => {
-    const i = n.querySelector("#prompt").value;
-    uh(t, n, i);
-  }), n.querySelectorAll(".aie-ai-panel-actions p").forEach((i) => {
-    const s = i.getAttribute("data-prompt"), o = i.getAttribute("data-temperature"), a = i.getAttribute("data-topP"), l = i.getAttribute("data-frequencyPenalty"), u = i.getAttribute("data-presencePenalty"), c = { temperature: o, top_p: a, frequency_penalty: l, presence_penalty: u };
-    i.addEventListener("click", () => {
-      uh(t, n, s, JSON.stringify(c));
+    const r = n.querySelector("#prompt").value;
+    uh(t, n, r);
+  }), n.querySelectorAll(".aie-ai-panel-actions p").forEach((r) => {
+    const i = r.getAttribute("data-prompt"), s = r.getAttribute("data-temperature"), o = r.getAttribute("data-topP"), a = r.getAttribute("data-frequencyPenalty"), l = r.getAttribute("data-presencePenalty"), u = { temperature: s, top_p: o, frequency_penalty: a, presence_penalty: l };
+    r.addEventListener("click", () => {
+      uh(t, n, i, JSON.stringify(u));
     });
-  });
-  const r = n.querySelector("#prompt");
-  if (r) {
-    const i = () => {
-      r.style.height = "auto", r.style.height = r.scrollHeight + "px";
-    };
-    r.addEventListener("input", i), window.setTimeout(i, 0);
-  }
-  return n;
+  }), n;
 }, L_ = {
   id: "ai",
   title: "ai",
