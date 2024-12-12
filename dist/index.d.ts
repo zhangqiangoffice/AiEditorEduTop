@@ -316,7 +316,9 @@ declare const defaultToolbarKeys: string[];
 
 declare class Footer extends HTMLElement implements AiEditorEvent {
     count: number;
+    characterCount: number;
     selectCount: number;
+    selectCharacterCount: number;
     draggable: boolean;
     constructor();
     initDraggable(draggable?: boolean): void;
@@ -324,6 +326,7 @@ declare class Footer extends HTMLElement implements AiEditorEvent {
     onCreate(props: EditorEvents["create"], _: AiEditorOptions): void;
     onTransaction(props: EditorEvents["transaction"]): void;
     getCharacterCount(str: string): number;
+    getWordCount(str: string): number;
 }
 
 declare class Header extends HTMLElement implements AiEditorEvent {

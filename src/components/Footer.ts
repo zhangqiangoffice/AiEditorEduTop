@@ -5,7 +5,9 @@ import {EditorEvents} from "@tiptap/core";
 export class Footer extends HTMLElement implements AiEditorEvent {
 
     count: number = 0
+    characterCount: number = 0
     selectCount:number = 0
+    selectCharacterCount:number = 0
     draggable: boolean = true;
 
     constructor() {
@@ -66,7 +68,7 @@ export class Footer extends HTMLElement implements AiEditorEvent {
     }
 
     updateCharacters() {
-        let wordCountText = this.selectCount ? `单词数: ${this.selectCount} / ${this.count}` : `单词数: ${this.count}`;
+        let wordCountText = this.selectCount ? `字符数:${this.characterCount} -- 单词数: ${this.selectCount} / ${this.count}` : `字符数: ${this.characterCount} -- 单词数: ${this.count}`;
         let svgIcon = '';
 
         if (this.draggable) {
@@ -88,17 +90,19 @@ export class Footer extends HTMLElement implements AiEditorEvent {
         //this.count = props.editor.storage.characterCount.characters()
         // const str:string = props.editor.storage.markdown.getMarkdown();
         const {doc} = props.editor!.state;
-        this.count = this.getCharacterCount(doc.textContent);
+        this.count = this.getWordCount(doc.textContent);
+        this.characterCount = this.getCharacterCount(doc.textContent);
         this.updateCharacters();
     }
 
     onTransaction(props: EditorEvents["transaction"]): void {
         const {selection, doc} = props.editor!.state
-        const selectedText = this.getCharacterCount(doc.textBetween(selection.from, selection.to)) ;
+        const selectedText = this.getWordCount(doc.textBetween(selection.from, selection.to)) ;
 
         //const str:string = props.editor.storage.markdown.getMarkdown();
         const str:string = doc.textContent;
-        const newCount = this.getCharacterCount(str);
+        const newCount = this.getWordCount(str);
+        const newCharaterCount = this.getCharacterCount(str);
 
         if(selectedText != this.selectCount){
             this.selectCount = selectedText;
@@ -109,18 +113,21 @@ export class Footer extends HTMLElement implements AiEditorEvent {
             this.count = newCount;
             this.updateCharacters();
         }
+
+        if (newCharaterCount != this.characterCount) {
+            this.characterCount = newCharaterCount;
+            this.updateCharacters();
+        }
     }
 
-    // getCharacterCount(str: string): number {
-    //     const chinese = Array.from(str).filter((ch) => /[\u4e00-\u9fa5]/.test(ch));
-    //     const english = Array.from(str)
-    //         .map((ch) => (/[a-zA-Z0-9\s]/.test(ch) ? ch : ' '))
-    //         .join('')
-    //         .split(/\s+/)
-    //         .filter((s) => s);
-    //     return chinese.length + english.length;
-    // }
-    getCharacterCount(str: string) {
+    getCharacterCount(str: string): number {
+        // 移除所有空白字符（空格、制表符、换行符等）
+        str = str.replace(/\s+/g, '');
+        
+        // 返回所有非空白字符的数量（包括中文、英文、数字、标点符号）
+        return str.length;
+    }
+    getWordCount(str: string) {
         //console.log(str)
         str = str.replace(/[\u4e00-\u9fa5]+/g, " ");
         // 将换行符，前后空格不计算为单词数

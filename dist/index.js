@@ -18171,7 +18171,9 @@ class U0 extends HTMLElement {
   constructor() {
     super();
     D(this, "count", 0);
+    D(this, "characterCount", 0);
     D(this, "selectCount", 0);
+    D(this, "selectCharacterCount", 0);
     D(this, "draggable", !0);
   }
   initDraggable(n) {
@@ -18192,7 +18194,7 @@ class U0 extends HTMLElement {
     }), this.addEventListener("mouseup", c);
   }
   updateCharacters() {
-    let n = this.selectCount ? `单词数: ${this.selectCount} / ${this.count}` : `单词数: ${this.count}`, r = "";
+    let n = this.selectCount ? `字符数:${this.characterCount} -- 单词数: ${this.selectCount} / ${this.count}` : `字符数: ${this.characterCount} -- 单词数: ${this.count}`, r = "";
     this.draggable && (r = `<div style="width: 20px;height: 20px;overflow: hidden">
                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                            <path fill="none" d="M0 0h24v24H0z"></path>
@@ -18205,22 +18207,16 @@ class U0 extends HTMLElement {
   }
   onCreate(n, r) {
     const { doc: i } = n.editor.state;
-    this.count = this.getCharacterCount(i.textContent), this.updateCharacters();
+    this.count = this.getWordCount(i.textContent), this.characterCount = this.getCharacterCount(i.textContent), this.updateCharacters();
   }
   onTransaction(n) {
-    const { selection: r, doc: i } = n.editor.state, s = this.getCharacterCount(i.textBetween(r.from, r.to)), o = i.textContent, a = this.getCharacterCount(o);
-    s != this.selectCount && (this.selectCount = s, this.updateCharacters()), a != this.count && (this.count = a, this.updateCharacters());
+    const { selection: r, doc: i } = n.editor.state, s = this.getWordCount(i.textBetween(r.from, r.to)), o = i.textContent, a = this.getWordCount(o), l = this.getCharacterCount(o);
+    s != this.selectCount && (this.selectCount = s, this.updateCharacters()), a != this.count && (this.count = a, this.updateCharacters()), l != this.characterCount && (this.characterCount = l, this.updateCharacters());
   }
-  // getCharacterCount(str: string): number {
-  //     const chinese = Array.from(str).filter((ch) => /[\u4e00-\u9fa5]/.test(ch));
-  //     const english = Array.from(str)
-  //         .map((ch) => (/[a-zA-Z0-9\s]/.test(ch) ? ch : ' '))
-  //         .join('')
-  //         .split(/\s+/)
-  //         .filter((s) => s);
-  //     return chinese.length + english.length;
-  // }
   getCharacterCount(n) {
+    return n = n.replace(/\s+/g, ""), n.length;
+  }
+  getWordCount(n) {
     n = n.replace(/[\u4e00-\u9fa5]+/g, " "), n = n.replace(/\n|\r|^\s+|\s+$/gi, ""), n = n.replace(/\s+/gi, " ");
     var r = 0, i = n.match(/\s/g);
     return i ? r = i.length + 1 : n && (r = 1), r;
@@ -38899,9 +38895,7 @@ const $o = {
   else {
     const o = e.querySelector("textarea");
     o.value = "";
-    const { selection: a, doc: l } = t.editor.state, u = l.textBetween(a.from, a.to);
-    console.log(u);
-    const c = t.editor.aiEditor.options, d = mn.get((i = c.ai) == null ? void 0 : i.bubblePanelModel);
+    const { selection: a, doc: l } = t.editor.state, u = l.textBetween(a.from, a.to), c = t.editor.aiEditor.options, d = mn.get((i = c.ai) == null ? void 0 : i.bubblePanelModel);
     d ? d.chat(u, n, r, {
       onStart(f) {
         t.aiClient = f, e.querySelector(".aie-ai-panel-actions").style.display = "none", e.querySelector(".loader").style.display = "block", e.querySelector(".aie-ai-panel-body-content").style.display = "block", e.querySelector("#go").innerHTML = $o.aiPanelStop;
