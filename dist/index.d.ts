@@ -372,6 +372,8 @@ export declare interface OpenaiModelConfig extends AiModelConfig {
     endpoint?: string;
     apiKey: string;
     model?: string;
+    undetectableApiKey?: string;
+    difyGrammarlyApiKey?: string;
 }
 
 export declare class SparkAiModel extends AiModel {

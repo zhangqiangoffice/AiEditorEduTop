@@ -68,14 +68,16 @@ window.aiEditor = new AiEditor({
             //     ...config
             // },
             // openai: {
-            //     endpoint: "https://api.moonshot.cn",
-            //     model: "moonshot-v1-8k",
-            //     apiKey: "sk-alQ96zb******"
+            //     endpoint: "https://shuchong.xyz",
+            //     model: "gpt-3.5-turbo",
+            //     apiKey: "sk-***",
+            //     undetectableApiKey:"",
+            //     difyGrammarlyApiKey:""
             // },
             // azure:{
             //     // endpoint: "https://edutop.openai.azure.com",
             //     // model: "GPT4O",
-            //     apiKey: "",
+            //     apiKey: "f1da31d5239b4fb5ace2184e40bb0f5f",
             //     undetectableApiKey:"",
             //     difyGrammarlyApiKey:""
             // }
@@ -85,7 +87,7 @@ window.aiEditor = new AiEditor({
             // }
         },
         // bubblePanelEnable:false,
-        // bubblePanelModel: "azure",
+        // bubblePanelModel: "openai",
         onTokenConsume: (modelName, _modelConfig, count) => {
             console.log(modelName, " token count:" + count)
         },
